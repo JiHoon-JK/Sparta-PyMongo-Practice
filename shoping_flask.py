@@ -1,6 +1,4 @@
-# Ctrl+alt+O => import 값 정렬 단축키
-import requests
-from bs4 import BeautifulSoup
+# Ctrl+alt+O => import 값 정렬
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient  # pymongo를 임포트 하기(패키지 인스톨 먼저 해야겠죠?)
 
@@ -35,8 +33,10 @@ def clientlist_post():
     # 다했으면 성공여부만 보냄
     return jsonify({'result': 'success'})
 
+#shop_client_list 에 저장된 정보를 가져오는 api : clientlist_get
 @app.route('/order', methods=['GET'])
 def clinetlist_get():
+    # id 값은 제외하고, 모든 값을 가져오기
     orders = list(db.shop_client_list.find({}, {'_id': 0}))
     return jsonify({'result': 'success', 'orders': orders})
 
