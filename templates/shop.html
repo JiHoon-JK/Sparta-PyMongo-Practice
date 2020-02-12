@@ -7,8 +7,6 @@
   <link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap" rel="stylesheet">
   <!-- bootstrap css -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <!-- mystyle 으로 분리 -->
-  <link rel = "stylesheet" type = "text/css" href = "mystyle.css">
   <!-- flask에 css 적용 -->
   <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
 
@@ -29,13 +27,13 @@
         data: {},
         success: function(response){
           let orders = response['orders'];
-          for (let i=0; i < 10; i++){
+          for (let i=0; i < orders.length; i++){
             make_list(orders[i]['name'],orders[i]['amount'],orders[i]['address'],orders[i]['phone'])
           }
         }
       })
     }
-    
+
 
 
     function make_list(name,amount,address,phone){
@@ -57,7 +55,7 @@
 
       // 전화번호 체크 정규식
       let regExp =  /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
-      
+
       if (name == ""){
         alert("이름을 입력해주세요");
         $("#ip_customer_name").focus();
@@ -72,18 +70,18 @@
         alert("주소를 입력하세요");
         $("#ip_customer_address").focus();
         return false
-      } 
+      }
       if (phone == "") {
         alert("전화번호를 입력하세요");
         $("#ip_customer_phone").focus();
         return false
-      } 
+      }
 
       if (!regExp.test(phone)) {
         alert("휴대폰번호 입력 형식이 틀립니다. 010-0000-0000으로 입력해주세요");
         $("#ip_customer_phone").focus();
         return false
-      } 
+      }
 
       $.ajax({
           type: "POST",
@@ -97,19 +95,6 @@
           }
         })
 
-      
-
-      let order_html = 
-      '<tr>' +
-      '<td>' + name + '</td>' + 
-      '<td>'+ amount +  '</td>' + 
-      '<td>'+ address + '</td>' + 
-      '<td>'+ phone + '</td>' 
-      + '</tr>'
-
-      $("#table_body").append(order_html);
-      
-      
     }
 
   </script>
